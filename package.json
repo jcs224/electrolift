@@ -1,0 +1,13 @@
+{
+  
+  "name"    : "electrolift",
+  "version" : "0.1.0",
+  "main"    : "main.js",
+  "scripts" : {
+    "start"   : "electron ."
+  },
+  
+  "dependencies": {
+    "electron": "^1.7.12"
+  }
+}
