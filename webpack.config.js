@@ -30,5 +30,6 @@ module.exports = {
           $: "jquery",
           jQuery: "jquery"
         })
-      ]
+      ],
+    target: "electron"
   };
