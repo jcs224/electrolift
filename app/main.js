@@ -2,6 +2,16 @@ const {app, BrowserWindow} = require('electron')
 const path = require('path')
 const url = require('url')
 
+const dgram = require('dgram');
+const mavlink = require('mavlink');
+const mavlink_helper = new mavlink(1,1);
+const server = dgram.createSocket('udp4');
+
+/*----- Variables ----*/
+var server_port = 14550; // This UDP server
+var remote_port = null; // Remote server. Set upon heartbeat from drone
+var remote_ip = '127.0.0.1'; // UPD server of remote IP
+
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let win
@@ -50,3 +60,18 @@ app.on('activate', () => {
     createWindow()
   }
 })
+
+server.on('message', function(message, remote) {
+  mavlink_helper.parse(message);
+  remote_port = remote.port;
+});
+
+// Attitude
+mavlink_helper.on('ATTITUDE', function(message, fields) {
+  process.stdout.write('roll: ' + fields.roll + "\n");
+  process.stdout.write('pitch: ' + fields.pitch + "\n");
+  process.stdout.write('yaw: ' + fields.yaw + "\n");
+  win.webContents.send('attitude-stuff', fields);
+});
+
+server.bind(server_port);
