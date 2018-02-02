@@ -18,7 +18,7 @@ function createWindow () {
   }))
 
   // Hide dev tools by default, open with ctrl+shift+i
-  // win.webContents.openDevTools()
+  win.webContents.openDevTools()
 
   // Emitted when the window is closed.
   win.on('closed', () => {
