@@ -1,4 +1,6 @@
 var m = require("mithril");
+var Sortable = require("sortablejs");
+var sortable = Sortable.create($("#waypoints")[0]);
 
 var Waypoints = {
     view() {
