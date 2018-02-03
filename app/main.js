@@ -65,5 +65,6 @@ mavlink.on('GLOBAL_POSITION_INT', function(message, fields) {
   gps.lat = fields.lat / 1e7;
   gps.lon = fields.lon / 1e7;
   gps.relative_alt = fields.relative_alt / 1000;
+  gps.hdg = fields.hdg;
   win.webContents.send('drone-gps', gps);
 });
