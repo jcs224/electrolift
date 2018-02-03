@@ -22,3 +22,7 @@ ipcRenderer.on('drone-attitude', (event, payload) => {
     attitude.setPitch(pitch);
     heading.setHeading(yaw);
 });
+
+ipcRenderer.on('drone-gps', (event, payload) => {
+
+});

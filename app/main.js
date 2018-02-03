@@ -59,3 +59,11 @@ mavlink.on('ATTITUDE', function(message, fields) {
   process.stdout.write('yaw: ' + fields.yaw + "\n");
   win.webContents.send('drone-attitude', fields);
 });
+
+mavlink.on('GLOBAL_POSITION_INT', function(message, fields) {
+  var gps = {};
+  gps.lat = fields.lat / 1e7;
+  gps.lon = fields.lon / 1e7;
+  gps.relative_alt = fields.relative_alt / 1000;
+  win.webContents.send('drone-gps', gps);
+});
