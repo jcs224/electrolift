@@ -5,6 +5,7 @@ require("./components/map");
 var { ipcRenderer } = require("electron");
 var state = require("./state");
 var m = require("mithril");
+var Waypoints = require('./components/waypoints');
 
 m.render($('.buttons')[0], [
     m('button', { 
@@ -23,3 +24,5 @@ m.render($('.buttons')[0], [
         }
     }, 'Return to Launch'),
 ]);
+
+m.mount($('#waypoints')[0], Waypoints);
