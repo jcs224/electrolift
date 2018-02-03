@@ -10,7 +10,7 @@ var indicator_options = {
 var attitude = $.flightIndicator('.attitude', 'attitude', indicator_options);
 var heading = $.flightIndicator('.heading', 'heading', indicator_options);
 // var airspeed = $.flightIndicator('.airspeed', 'airspeed', indicator_options);
-// var altimeter = $.flightIndicator('.altimeter', 'altimeter', indicator_options);
+var altimeter = $.flightIndicator('.altimeter', 'altimeter', indicator_options);
 
 ipcRenderer.on('drone-attitude', (event, payload) => {
     var roll = payload.roll * (180 / Math.PI) * -1;
@@ -21,4 +21,8 @@ ipcRenderer.on('drone-attitude', (event, payload) => {
     attitude.setRoll(roll);
     attitude.setPitch(pitch);
     heading.setHeading(yaw);
+});
+
+ipcRenderer.on('drone-gps', (event, payload) => {
+    altimeter.setAltitude(payload.relative_alt * 3.28084);
 });
