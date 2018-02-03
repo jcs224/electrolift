@@ -4,7 +4,6 @@ require("./components/indicators");
 require("./components/map");
 var { ipcRenderer } = require("electron");
 var state = require("./state");
-
 var m = require("mithril");
 
 m.render($('.buttons')[0], [
