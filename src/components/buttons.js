@@ -9,7 +9,7 @@ var Buttons = {
                 onclick: () => {
                     state.center_map = state && state.center_map ? false : true;
                 }
-            }, 'Center map'),
+            }, state.center_map ? 'Uncenter map' : 'Center map'),
             m('button', { 
                 onclick: () => {
                     ipcRenderer.send("doMission", true);
