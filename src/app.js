@@ -7,8 +7,7 @@ var state = require("./state");
 var m = require("mithril");
 
 m.render($('.buttons')[0], m('button', { 
-    onclick: () => { 
-        console.log('sup');
+    onclick: () => {
         state.center_map = state && state.center_map ? false : true;
     }
 }, 'Center map'));
