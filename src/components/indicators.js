@@ -9,8 +9,8 @@ var indicator_options = {
 
 var attitude = $.flightIndicator('.attitude', 'attitude', indicator_options);
 var heading = $.flightIndicator('.heading', 'heading', indicator_options);
-var airspeed = $.flightIndicator('.airspeed', 'airspeed', indicator_options);
-var altimeter = $.flightIndicator('.altimeter', 'altimeter', indicator_options);
+// var airspeed = $.flightIndicator('.airspeed', 'airspeed', indicator_options);
+// var altimeter = $.flightIndicator('.altimeter', 'altimeter', indicator_options);
 
 ipcRenderer.on('drone-attitude', (event, payload) => {
     var roll = payload.roll * (180 / Math.PI) * -1;
