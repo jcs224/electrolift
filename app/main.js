@@ -1,7 +1,12 @@
-const {app, BrowserWindow} = require('electron')
+const {app, BrowserWindow, ipcMain} = require('electron')
 const path = require('path')
 const url = require('url')
-var mavlink = require("./lib/mavlink");
+var state = require("./state");
+const dgram = require('dgram');
+const mavlink = require('mavlink');
+const mavlink_helper = new mavlink(1,1);
+const server = dgram.createSocket('udp4');
+var mavlink_api = require("./lib/mavlink_api");
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -53,18 +58,48 @@ app.on('activate', () => {
 })
 
 // Send incoming drone data to renderer
-mavlink.on('ATTITUDE', function(message, fields) {
-  process.stdout.write('roll: ' + fields.roll + "\n");
-  process.stdout.write('pitch: ' + fields.pitch + "\n");
-  process.stdout.write('yaw: ' + fields.yaw + "\n");
+mavlink_helper.on('ATTITUDE', function(message, fields) {
+  state.drone_data.att = fields;
   win.webContents.send('drone-attitude', fields);
 });
 
-mavlink.on('GLOBAL_POSITION_INT', function(message, fields) {
+mavlink_helper.on('GLOBAL_POSITION_INT', function(message, fields) {
   var gps = {};
   gps.lat = fields.lat / 1e7;
   gps.lon = fields.lon / 1e7;
   gps.relative_alt = fields.relative_alt / 1000;
   gps.hdg = fields.hdg;
+  state.drone_data.gps = gps;
   win.webContents.send('drone-gps', gps);
 });
+
+// Heartbeat
+mavlink_helper.on('HEARTBEAT', function(message, fields) {
+  state.drone_data.heartbeat_fields = fields;
+  state.drone_data.heartbeat_message = message;
+
+  // Is it armed?
+  if (fields.base_mode == 209) {
+      state.drone_data.armed = true;
+  }
+
+  if (fields.base_mode == 81) {
+      state.drone_data.armed = false;
+  }
+});
+
+ipcMain.on("doMission", (event, payload) => {
+  console.log("It's doing something!")
+  mavlink_api.startMission();
+});
+
+ipcMain.on("sendCommand", (event, payload) => {
+  mavlink_api.sendCommand(payload);
+});
+
+server.on('message', function(message, remote) {
+  mavlink_helper.parse(message);
+  state.remote_port = remote.port;
+});
+
+server.bind(state.server_port);
