@@ -2,9 +2,6 @@ var L = require("leaflet");
 var { ipcRenderer } = require("electron");
 require("leaflet-rotatedmarker/leaflet.rotatedMarker.js");
 
-var drone_marker; // Drone marker
-var is_centered = false; // Is the map already centered in the right spot?
-
 // Weird leaflet stuff
 delete L.Icon.Default.prototype._getIconUrl;
 
@@ -23,11 +20,15 @@ var Esri_WorldImagery = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest
 
 Esri_WorldImagery.addTo(map);
 
+var drone_marker; // Drone marker
+var is_centered = false; // Is the map already centered in the right spot?
+
 ipcRenderer.on('drone-gps', (event, payload) => {
     // Update map
     if (drone_marker) {
         var newLatLng = new L.LatLng(payload.lat, payload.lon);
         drone_marker.setLatLng(newLatLng).setRotationAngle(payload.hdg / 100 - 180).setRotationOrigin('center center');
+        map.panTo(drone_marker.getLatLng());
         
         if (!is_centered) {
             map.setView(newLatLng);
