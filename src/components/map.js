@@ -1,6 +1,7 @@
 var L = require("leaflet");
 var { ipcRenderer } = require("electron");
 require("leaflet-rotatedmarker/leaflet.rotatedMarker.js");
+var state = require("../state");
 
 // Weird leaflet stuff
 delete L.Icon.Default.prototype._getIconUrl;
@@ -28,7 +29,10 @@ ipcRenderer.on('drone-gps', (event, payload) => {
     if (drone_marker) {
         var newLatLng = new L.LatLng(payload.lat, payload.lon);
         drone_marker.setLatLng(newLatLng).setRotationAngle(payload.hdg / 100 - 180).setRotationOrigin('center center');
-        map.panTo(drone_marker.getLatLng());
+
+        if (state && state.center_map) {
+            map.panTo(drone_marker.getLatLng());
+        }
         
         if (!is_centered) {
             map.setView(newLatLng);
