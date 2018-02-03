@@ -89,7 +89,6 @@ mavlink_helper.on('HEARTBEAT', function(message, fields) {
 });
 
 ipcMain.on("doMission", (event, payload) => {
-  console.log("It's doing something!")
   mavlink_api.startMission();
 });
 

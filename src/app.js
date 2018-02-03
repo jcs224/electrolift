@@ -14,7 +14,6 @@ m.render($('.buttons')[0], [
     }, 'Center map'),
     m('button', { 
         onclick: () => {
-            console.log('This will start missions one day.');
             ipcRenderer.send("doMission", true);
         }
     }, 'Start Mission'),
