@@ -1,5 +1,6 @@
 var m = require("mithril");
 var { ipcRenderer } = require("electron");
+var state = require("../state");
 
 var Buttons = {
     view() {
