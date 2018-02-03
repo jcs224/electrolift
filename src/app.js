@@ -1,10 +1,7 @@
 require("./scss/style.scss");
 require("leaflet/dist/leaflet.css");
-require("jquery-flight-indicators/css/flightindicators.css");
+require("./components/indicators");
 var L = require("leaflet");
-require("jquery-flight-indicators/js/jquery.flightindicators.min.js");
-
-var { ipcRenderer } = require("electron");
 
 // Weird leaflet stuff
 delete L.Icon.Default.prototype._getIconUrl;
@@ -28,24 +25,3 @@ Esri_WorldImagery.addTo(map);
 L.marker([51.5, -0.09]).addTo(map)
     .bindPopup('A pretty CSS3 popup.<br> Easily customizable.')
     .openPopup();
-
-var indicator_options = { 
-    img_directory: '../node_modules/jquery-flight-indicators/img/',
-    showBox: false
-}
-
-var attitude = $.flightIndicator('.attitude', 'attitude', indicator_options);
-var heading = $.flightIndicator('.heading', 'heading', indicator_options);
-var airspeed = $.flightIndicator('.airspeed', 'airspeed', indicator_options);
-var altimeter = $.flightIndicator('.altimeter', 'altimeter', indicator_options);
-
-ipcRenderer.on('attitude-stuff', (event, payload) => {
-    var roll = payload.roll * (180 / Math.PI) * -1;
-    var pitch = payload.pitch * (180 / Math.PI);
-    var yaw = payload.yaw * (180 / Math.PI);
-
-    // Update Gauges
-    attitude.setRoll(roll);
-    attitude.setPitch(pitch);
-    heading.setHeading(yaw);
-});

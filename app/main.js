@@ -52,9 +52,10 @@ app.on('activate', () => {
   }
 })
 
+// Send incoming drone data to renderer
 mavlink.on('ATTITUDE', function(message, fields) {
   process.stdout.write('roll: ' + fields.roll + "\n");
   process.stdout.write('pitch: ' + fields.pitch + "\n");
   process.stdout.write('yaw: ' + fields.yaw + "\n");
-  win.webContents.send('attitude-stuff', fields);
+  win.webContents.send('drone-attitude', fields);
 });
