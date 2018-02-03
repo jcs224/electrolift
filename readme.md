@@ -1,7 +1,7 @@
 # ElectroLift
 ## Ground Control Station (GCS) built with web technologies
 
-This project is a very basic ground control station (GCS) for autonomous UAVs. Currently, it can communicate via UDP only. This project is built using only web-based technologies. Desktop builds are possible on all major operating systems thanks to Electron.
+This project is a very basic ground control station (GCS) for autonomous UAVs. Currently, it can communicate via UDP only. It's is built using only web-based technologies. Desktop builds are possible on all major operating systems thanks to Electron.
 
 This app has only been tested on Ubuntu Linux so far. YMMV.
 
@@ -16,7 +16,7 @@ This app has only been tested on Ubuntu Linux so far. YMMV.
 - [CSS Grid](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Grid_Layout)
 
 ## Prerequisites
-You must have [Node](https://nodejs.org/en/) and [Yarn](https://yarnpkg.com/en/)installed to run the development version of ElectroLift.
+You must have [Node](https://nodejs.org/en/) and [Yarn](https://yarnpkg.com/en/) installed to run the development version of ElectroLift.
 
 ### To build
 `yarn install`
