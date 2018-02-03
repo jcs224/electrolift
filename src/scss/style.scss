@@ -13,8 +13,8 @@ body {
         display: grid;
         grid-template-columns: 1fr 200px 250px;
         grid-template-rows: 1fr 250px;
-        grid-template-areas:    "map guages waypoints"
-                                "controls guages waypoints";
+        grid-template-areas:    "map gauges waypoints"
+                                "controls gauges waypoints";
 
         #map {
             grid-area: map;
@@ -35,9 +35,9 @@ body {
             }
         }
 
-        #guages {
+        #gauges {
             background-color: red;
-            grid-area: guages;
+            grid-area: gauges;
         }
     
         #waypoints {
