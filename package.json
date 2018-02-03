@@ -9,6 +9,7 @@
     "start:dev": "webpack-dev-server"
   },
   "dependencies": {
+    "@shopify/draggable": "^1.0.0-beta.4",
     "electron": "^1.7.12",
     "jquery": "^3.3.1",
     "jquery-flight-indicators": "^1.0.0",
