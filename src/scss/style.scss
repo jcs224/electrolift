@@ -43,8 +43,7 @@ body {
         #waypoints {
             background-color: blue;
             grid-area: waypoints;
-            padding: 10px;
-            display: grid;
+            padding: 10px 10px 0 10px;
             grid-row-gap: 10px;
             overflow-y: scroll;
 
@@ -54,6 +53,7 @@ body {
                 display: flex;
                 justify-content: center;
                 align-items: center;
+                margin: 0 0 10px 0;
             }
         }
     }
