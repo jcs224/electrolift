@@ -19,7 +19,10 @@ This app has only been tested on Ubuntu Linux so far. YMMV.
 You must have [Node](https://nodejs.org/en/) and [Yarn](https://yarnpkg.com/en/) installed to run the development version of ElectroLift.
 
 ### To build
-`yarn install`
+```shell
+yarn install
+yarn run build:watch
+```
 
 ### To run
 `yarn start`
