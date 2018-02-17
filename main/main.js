@@ -88,6 +88,31 @@ mavlink_helper.on('HEARTBEAT', function(message, fields) {
   }
 });
 
+mavlink_helper.on('MISSION_COUNT', (message, fields) => {
+  state.drone_data.mission_count = fields.count;
+
+  // Get mission waypoints.
+  for (var i = 0; i < fields.count; i++) {
+    mavlink_api.sendMessage('MISSION_REQUEST', {
+      'target_system': state.drone_data.heartbeat_message.system,
+      'target_component': state.drone_data.heartbeat_message.component,
+      'seq': i,
+      'mission_type': 0
+    });
+  }
+});
+
+mavlink_helper.on('MISSION_ITEM', (message, fields) => {
+  if (state.drone_data.mission_items[fields.seq]) {
+    // Not sure what we're going to do here yet
+  } else {
+    state.drone_data.mission_items.push(fields);
+    mavlink_api.getWaypoints();
+    win.webContents.send('drone_waypoints', state.drone_data.mission_items);
+  }
+});
+
+// Main/render process link
 ipcMain.on("doMission", (event, payload) => {
   mavlink_api.startMission();
 });
@@ -96,6 +121,7 @@ ipcMain.on("sendCommand", (event, payload) => {
   mavlink_api.sendCommand(payload);
 });
 
+// UDP boilerplate
 server.on('message', function(message, remote) {
   mavlink_helper.parse(message);
   state.remote_port = remote.port;

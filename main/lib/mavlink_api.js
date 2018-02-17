@@ -69,6 +69,14 @@ var mavlink_api = {
             'custom_mode': 3
         });
         this.sendCommand(300);
+    },
+
+    getWaypoints() {
+        this.sendMessage('MISSION_REQUEST_LIST', {
+            'target_system': state.drone_data.heartbeat_message.system,
+            'target_component': state.drone_data.heartbeat_message.component,
+            'mission_type': 0
+        });
     }
 }
 
