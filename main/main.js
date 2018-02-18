@@ -112,6 +112,11 @@ mavlink_helper.on('MISSION_ITEM', (message, fields) => {
   }
 });
 
+mavlink_helper.on('MISSION_CURRENT', (message, fields) => {
+  state.drone_data.current_mission = fields.seq;
+  win.webContents.send('drone_current_waypoint', state.drone_data.current_mission);
+});
+
 // Main/render process link
 ipcMain.on("doMission", (event, payload) => {
   mavlink_api.startMission();
